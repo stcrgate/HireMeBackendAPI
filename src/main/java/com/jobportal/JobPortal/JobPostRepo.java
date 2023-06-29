@@ -13,4 +13,6 @@ public interface JobPostRepo extends MongoRepository<JobPostModel, String> {
 
     @Query("{$and: [{_id: ?0}, {'fieldToUpdate': ?1}]}")
     void updateFieldById(String id, String updatedValue);
+
+    List<JobPostModel> findByCreatedBy(String createdBy);
 }

@@ -1,6 +1,5 @@
 package com.jobportal.JobPortal;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +19,12 @@ public class JobPostController {
     @CrossOrigin
     public List<JobPostModel> getAllJobs(){
         return jobRepo.findAll();
+    }
+
+    @GetMapping("/jobposted/{createdBy}")
+    @CrossOrigin
+    public List<JobPostModel> getAllJobsByCreatedBy(@PathVariable String createdBy) {
+        return jobRepo.findByCreatedBy(createdBy);
     }
 
     @GetMapping("/search/{text}")
@@ -45,6 +50,10 @@ public class JobPostController {
             existingJob.setDesc(updatedJob.getDesc());
             existingJob.setExp(updatedJob.getExp());
             existingJob.setTechs(updatedJob.getTechs());
+            existingJob.setCompanyName(updatedJob.getCompanyName());
+            existingJob.setSalary(updatedJob.getSalary());
+            existingJob.setCompanyLogo(updatedJob.getCompanyLogo());
+            existingJob.setCreatedBy(updatedJob.getCreatedBy());
 
             return jobRepo.save(existingJob);
         } else {
@@ -64,5 +73,4 @@ public class JobPostController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }
